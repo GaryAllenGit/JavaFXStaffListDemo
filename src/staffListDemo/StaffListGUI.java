@@ -37,7 +37,7 @@ public class StaffListGUI extends Application {
         listOfStaff.addEmployee("S004", "Simon", "Parkinson", "CompSci");
         listOfStaff.addEmployee("S005", "Mauro", "Valatti", "CompSci");
 
-        // bind the list of staff to the staffList GUI component
+        // Initialise the staffList GUI component
         staffList = new ListView<>();
         staffList.setPrefSize(280,220);
 
@@ -55,15 +55,20 @@ public class StaffListGUI extends Application {
             }
         });
 
+        // bind the list of staff to the staffList GUI component
         staffList.setItems(listOfStaff);
 
+
         // build the rest of the interface
+        // start with the Title at the top
         HBox topBox = new HBox(new Label("Staff List Editor"));
         topBox.setAlignment(Pos.CENTER);
 
-
+        // now the centre.  We have 2 VBoxes side by side
+        // first the one to contain the staffList
         VBox centreLeftBox = new VBox(staffList);
 
+        // now the one to contain the details of each employee
         idTF = new TextField();
         firstnameTF = new TextField();
         surnameTF = new TextField();
@@ -77,11 +82,12 @@ public class StaffListGUI extends Application {
         centreRightBox.setAlignment(Pos.CENTER);
         centreRightBox.setSpacing(2);
 
+        // put the 2 VBoxes into a HBox
         HBox middleBox = new HBox(centreLeftBox, centreRightBox);
         middleBox.setSpacing(5);
         middleBox.setPadding(new Insets(20));
 
-
+        // now the bottom section containing 4 buttons
         Button addButton = new Button("Add");
         addButton.setPrefSize(90,20);
         addButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -122,16 +128,19 @@ public class StaffListGUI extends Application {
         lowerBox.setAlignment(Pos.CENTER);
         lowerBox.setSpacing(10);
 
+        // put all 3 HBoxes into a VBox
         VBox fullGUI = new VBox(topBox, middleBox, lowerBox);
 
+        // put the VBox into a scene and the scene into the primary stage
         Scene scene = new Scene(fullGUI, 500, 350);
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
 
     private void staffListSelectionMade() {
-        Employee selectedEmp = (Employee)staffList.getSelectionModel().getSelectedItem();
+        Employee selectedEmp = staffList.getSelectionModel().getSelectedItem();
         if (selectedEmp != null) {
             setAllTextFields(selectedEmp);
         }
